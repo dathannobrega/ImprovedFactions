@@ -16,6 +16,8 @@ import io.github.toberocat.toberocore.command.options.ArgLengthOption
 import io.github.toberocat.toberocore.command.options.Options
 import io.github.toberocat.toberocore.util.placeholder.PlaceholderBuilder
 import org.bukkit.entity.Player
+import com.sk89q.worldguard.WorldGuard
+import com.sk89q.worldedit.bukkit.BukkitAdapter
 
 /**
  * Created: 04.08.2023
@@ -41,6 +43,17 @@ class CreateCommand(private val plugin: ImprovedFactionsPlugin) : PlayerSubComma
 
     override fun handle(player: Player, args: Array<out String>): Boolean {
         val name = parseArgs(player, args).get<String>(0) ?: return false
+
+        if (FactionHandler.isReservedName(name)) {
+            player.sendLocalized("base.command.create.reserved-name")
+            return true
+        }
+
+        if (isInRestrictedRegion(player)) {
+            player.sendLocalized("base.command.create.region-disabled")
+            return true
+        }
+
         val faction: Faction = FactionHandler.createFaction(player.uniqueId, name)
         player.sendLocalized(
             "base.commands.create.created-faction", PlaceholderBuilder()
@@ -48,5 +61,16 @@ class CreateCommand(private val plugin: ImprovedFactionsPlugin) : PlayerSubComma
                 .placeholders
         )
         return true
+    }
+
+    private fun isInRestrictedRegion(player: Player): Boolean {
+        if (!plugin.server.pluginManager.isPluginEnabled("WorldGuard")) return false
+        val disabledRegions = plugin.config.getStringList("worldguard.disabled-regions").map { it.lowercase() }
+        if (disabledRegions.isEmpty()) return false
+        val container = WorldGuard.getInstance().platform.regionContainer
+        val query = container.createQuery()
+        val location = BukkitAdapter.adapt(player.location)
+        val applicable = query.getApplicableRegions(location)
+        return applicable.any { disabledRegions.contains(it.id.lowercase()) }
     }
 }

@@ -55,6 +55,7 @@ dependencies {
     // Provided dependencies
     compileOnly(libs.placeholderapi)
     compileOnly(libs.dynmap.api)
+    compileOnly(libs.worldguard)
 
     // Test dependencies
     testImplementation(libs.kotlin.test.junit)

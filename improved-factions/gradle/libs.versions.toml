@@ -21,6 +21,7 @@ snakeyaml-version = "2.2"
 gson-version = "2.11.0"
 logback-classic-version = "1.2.13"
 junit-jupiter-params-version = "5.11.0"
+worldguard-version = "7.0.9"
 
 [libraries]
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin-version" }
@@ -52,5 +53,6 @@ mockbukkit = { module = "com.github.seeseemelk:MockBukkit-v1.20", version.ref = 
 snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml-version" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson-version" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-classic-version" }
+worldguard = { module = "com.sk89q.worldguard:worldguard-bukkit", version.ref = "worldguard-version" }
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

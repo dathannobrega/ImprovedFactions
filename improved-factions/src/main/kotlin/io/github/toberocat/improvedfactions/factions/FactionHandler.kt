@@ -19,7 +19,13 @@ import java.util.*
  * @author Tobias Madlberger (Tobias)
  */
 object FactionHandler {
+
+    private val reservedIdentifiers = setOf("safezone", "warzone")
+
+    fun isReservedName(name: String) = reservedIdentifiers.contains(name.lowercase())
+
     fun createFaction(ownerId: UUID, factionName: String, id: Int? = null): Faction {
+        require(!isReservedName(factionName)) { "Faction name is reserved" }
         return loggedTransaction {
             val faction = Faction.new(id) {
                 owner = ownerId
