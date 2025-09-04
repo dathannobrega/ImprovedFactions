@@ -30,6 +30,14 @@ class PapiExpansion(private val pluginConfig: ImprovedFactionsConfig) : Placehol
         placeholders["owner"] = { it.factionUser().faction()?.owner?.toOfflinePlayer()?.name }
         placeholders["name"] = { it.factionUser().faction()?.name }
         placeholders["rank"] = { it.factionUser().rank().name }
+        placeholders["members_total"] = {
+            it.factionUser().faction()?.members()?.count()?.toString()
+        }
+        placeholders["members_online"] = {
+            it.factionUser().faction()?.members()?.count { user ->
+                user.offlinePlayer().isOnline
+            }?.toString()
+        }
 
         ImprovedFactionsPlugin.instance.moduleManager.loadPapiPlaceholders(placeholders)
     }
