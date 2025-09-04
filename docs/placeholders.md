@@ -7,6 +7,8 @@ This plugin adds some placeholders via Papi (Placeholder API)
 - %faction_owner% - The owner of the faction
 - %faction_name% - The name of the faction
 - %faction_rank% - The rank of the player in the faction
+- %faction_members_total% - Total number of members in the faction
+- %faction_members_online% - Number of online members in the faction
 
 ## Power & Raids (v2.1.3)
 
